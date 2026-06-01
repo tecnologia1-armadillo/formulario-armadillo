@@ -1,3 +1,8 @@
+Aquí tienes el código completo y corregido. He movido la carga de la librería de Supabase al final del `<body>` (justo antes de tu script) para garantizar que la página cargue primero toda la estructura visual (el HTML) antes de intentar ejecutar la conexión.
+
+Copia todo este bloque, pégalo en tu archivo `index.html`, guarda los cambios y súbelos a tu repositorio.
+
+```html
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,7 +10,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Formulario Personal</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -58,10 +62,8 @@
   <small>Solo pueden enviar el formulario los usuarios autorizados</small>
 
   <form id="personalForm">
-    <!-- Status por defecto -->
     <input type="hidden" name="per_status_personal" value="1">
 
-    <!-- Archivos -->
     <label>Foto personal*
       <input type="file" id="per_foto_input" name="per_foto" accept="image/*" required>
     </label>
@@ -79,7 +81,6 @@
       <input type="file" id="per_pdf_hoja_vida_input" name="per_pdf_hoja_vida" accept="application/pdf,image/*">
     </label>
 
-    <!-- Datos personales -->
     <label>Tipo Documento*
       <select name="per_tipo_doc" id="tipo_documento_Select" required>
         <option value="">-- Seleccione --</option>
@@ -227,7 +228,6 @@
         required>
     </label>
 
-    <!-- Datos bancarios -->
     <label>Banco*
       <select name="dba_banco_id" id="BancoSelect" required></select>
     </label>
@@ -237,7 +237,6 @@
         class="digits-only" required>
     </label>
 
-    <!-- Nivel de inglés -->
     <label>Nivel de Inglés (Opcional)
       <select name="per_nivel_ingles" id="per_nivel_ingles">
         <option value="NO HABLO INGLES">NO HABLO INGLES</option>
@@ -252,6 +251,8 @@
 
     <button type="submit">Registrar</button>
   </form>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
   <script>
     // ========= CONFIG =========
@@ -609,3 +610,5 @@
 </body>
 
 </html>
+
+```
