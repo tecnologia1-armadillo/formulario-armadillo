@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registro de Personal – Armadillo</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    
+    <!-- jQuery and Select2 CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <style>
         :root {
             --yellow: #FFDE00;
@@ -199,6 +205,88 @@
         input:-webkit-autofill:focus {
             -webkit-box-shadow: 0 0 0 30px #2a2a2a inset !important;
             -webkit-text-fill-color: #e8e8e8 !important;
+        }
+
+        /* ── Estilos Select2 Oscuro Robustos ── */
+        html body .select2-container {
+            width: 100% !important;
+        }
+        html body .select2-container--default .select2-selection--single {
+            background-color: var(--input-bg) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 6px !important;
+            height: auto !important;
+            padding: .4rem .5rem !important;
+            transition: border-color .2s;
+        }
+        html body .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: var(--text) !important;
+            font-family: 'Nunito', sans-serif !important;
+            font-size: .9rem !important;
+            padding-left: 0 !important;
+            line-height: normal !important;
+        }
+        html body .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 100% !important;
+            right: 8px !important;
+        }
+        html body .select2-container--default .select2-selection--single .select2-selection__arrow b {
+            border-color: var(--muted) transparent transparent transparent !important;
+        }
+        html body .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
+            border-color: transparent transparent var(--muted) transparent !important;
+        }
+        html body .select2-container--default.select2-container--focus .select2-selection--single {
+            border-color: var(--yellow) !important;
+            box-shadow: 0 0 0 3px rgba(255, 222, 0, .12) !important;
+        }
+        
+        /* Dropdown Flotante */
+        html body .select2-dropdown {
+            background-color: var(--card) !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 6px !important;
+            z-index: 9999 !important;
+        }
+        html body .select2-search--dropdown {
+            padding: 8px !important;
+            background-color: var(--card) !important;
+        }
+        html body .select2-search--dropdown .select2-search__field {
+            background-color: var(--input-bg) !important;
+            border: 1px solid var(--border) !important;
+            color: var(--text) !important;
+            font-family: 'Nunito', sans-serif !important;
+            border-radius: 4px !important;
+            padding: 6px 10px !important;
+            width: 100% !important;
+        }
+        html body .select2-search--dropdown .select2-search__field:focus {
+            outline: none !important;
+            border-color: var(--yellow) !important;
+        }
+        html body .select2-container--default .select2-results {
+            background-color: var(--card) !important;
+        }
+        html body .select2-container--default .select2-results__options {
+            background-color: var(--card) !important;
+        }
+        html body .select2-container--default .select2-results__option {
+            color: var(--text) !important;
+            font-family: 'Nunito', sans-serif !important;
+            font-size: .9rem !important;
+            padding: 8px 12px !important;
+            background-color: var(--card) !important;
+        }
+        /* Hover / Resaltado */
+        html body .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: var(--yellow) !important;
+            color: #121212 !important;
+        }
+        /* Seleccionado */
+        html body .select2-container--default .select2-results__option[aria-selected="true"] {
+            background-color: rgba(255, 222, 0, 0.15) !important;
+            color: var(--yellow) !important;
         }
     </style>
 </head>
@@ -448,7 +536,9 @@
     </div>
 
     <script>
-        const API_BASE = 'https://qa.operadoresarmadillo.com/comercial/api/v1';
+        const API_BASE = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1')
+            ? 'http://localhost:8001/api/v1'
+            : 'https://qa.operadoresarmadillo.com/comercial/api/v1';
 
         async function cargarSelect(url, id, valField, labelField, placeholder = '— Seleccione —') {
             try {
@@ -468,11 +558,17 @@
         async function inicializar() {
             await Promise.all([
                 cargarSelect(`${API_BASE}/generos/`, 'generoSelect', 'id', 'nombre'),
-                cargarSelect(`${API_BASE}/municipios/`, 'ciudadSelect', 'id', 'nombre'),
+                cargarSelect(`${API_BASE}/municipios/?limit=1500`, 'ciudadSelect', 'id', 'nombre'),
                 cargarSelect(`${API_BASE}/eps/activas`, 'epsSelect', 'id', 'nombre', '— Sin EPS —'),
                 cargarSelect(`${API_BASE}/alimentacion/activos`, 'alimentacionSelect', 'id', 'nombre'),
                 cargarSelect(`${API_BASE}/bancos/activos`, 'BancoSelect', 'id', 'nombre'),
             ]);
+
+            // Inicializar Select2 en el buscador de Ciudad
+            $('#ciudadSelect').select2({
+                placeholder: '— Seleccione Ciudad —',
+                allowClear: true
+            });
         }
 
         const MAX_MB = 20;
@@ -533,6 +629,8 @@
                     const fecha = new Date(fd.get('fecha_nacimiento'));
                     if (isNaN(fecha) || fecha > new Date()) { alert('Fecha de nacimiento inválida.'); return; }
 
+                    if (!fd.get('municipios_id')) { alert('Falta seleccionar: Ciudad.'); return; }
+
                     const check = await precheck(doc);
                     if (!check.ok) { alert(check.msg); return; }
 
@@ -566,6 +664,7 @@
                     }
                     alert('✅ Registro guardado correctamente.');
                     form.reset();
+                    $('#ciudadSelect').val(null).trigger('change');
                 } catch (err) {
                     alert(`⚠️ No pudimos completar el registro.\n\n${err.message || err}`);
                 } finally {
