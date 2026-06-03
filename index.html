@@ -2,608 +2,624 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Formulario Personal</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      background: #f9f9f9;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro de Personal – Armadillo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+        :root {
+            --yellow: #FFDE00;
+            --dark: #121212;
+            --card: #1e1e1e;
+            --border: #2e2e2e;
+            --text: #e8e8e8;
+            --muted: #888;
+            --input-bg: #2a2a2a;
+        }
 
-    form {
-      max-width: 800px;
-      margin: auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-    }
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    label {
-      display: block;
-      margin-top: 15px;
-    }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--dark);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 2rem 1rem 4rem;
+        }
 
-    input,
-    select {
-      width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-    }
+        /* ── Header ── */
+        .header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: .75rem;
+            margin-bottom: 2.5rem;
+        }
 
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background: #0077cc;
-      color: #fff;
-      border: none;
-      cursor: pointer;
-    }
+        .header img {
+            height: 72px;
+        }
 
-    button:hover {
-      background: #005fa3;
-    }
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--yellow);
+        }
 
-    button[disabled] {
-      opacity: .6;
-      cursor: not-allowed;
-    }
-  </style>
+        .header p {
+            color: var(--muted);
+            font-size: .875rem;
+        }
+
+        /* ── Card ── */
+        .card {
+            max-width: 820px;
+            margin: 0 auto;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-top: 3px solid var(--yellow);
+            border-radius: 10px;
+            padding: 2rem;
+        }
+
+        /* ── Section title ── */
+        .section-title {
+            font-size: .7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--yellow);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: .5rem;
+            margin: 2rem 0 1.25rem;
+        }
+
+        .section-title:first-of-type {
+            margin-top: 0;
+        }
+
+        /* ── Grid ── */
+        .grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .grid-3 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        @media (max-width: 600px) {
+
+            .grid-2,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ── Field ── */
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: .35rem;
+        }
+
+        .field label {
+            font-size: .8rem;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .field label .req {
+            color: var(--yellow);
+            margin-left: 2px;
+        }
+
+        .field input,
+        .field select {
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            font-family: 'Nunito', sans-serif;
+            font-size: .9rem;
+            padding: .55rem .8rem;
+            transition: border-color .2s;
+            width: 100%;
+        }
+
+        .field input:focus,
+        .field select:focus {
+            outline: none;
+            border-color: var(--yellow);
+            box-shadow: 0 0 0 3px rgba(255, 222, 0, .12);
+        }
+
+        .field input[type="file"] {
+            padding: .45rem .6rem;
+            cursor: pointer;
+            color: var(--muted);
+        }
+
+        .field select option {
+            background: #1e1e1e;
+        }
+
+        /* ── Submit ── */
+        .btn-submit {
+            margin-top: 2rem;
+            width: 100%;
+            padding: .85rem;
+            background: var(--yellow);
+            color: #000;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background .2s, transform .1s;
+        }
+
+        .btn-submit:hover:not(:disabled) {
+            background: #e6c800;
+            transform: translateY(-1px);
+        }
+
+        .btn-submit:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+        }
+
+        /* ── Nota ── */
+        .nota {
+            text-align: center;
+            font-size: .78rem;
+            color: var(--muted);
+            margin-top: 1.25rem;
+        }
+
+        /* autofill dark fix */
+        input:-webkit-autofill,
+        input:-webkit-autofill:focus {
+            -webkit-box-shadow: 0 0 0 30px #2a2a2a inset !important;
+            -webkit-text-fill-color: #e8e8e8 !important;
+        }
+    </style>
 </head>
 
 <body>
-  <h2>Formulario de Registro Personal</h2>
-  <small>Solo pueden enviar el formulario los usuarios autorizados</small>
 
-  <form id="personalForm">
-    <input type="hidden" name="per_status_personal" value="1">
-
-    <label>Foto personal*
-      <input type="file" id="per_foto_input" name="per_foto" accept="image/*" required>
-    </label>
-    <label>Imagen Cédula*
-      <input type="file" id="per_pdf_cedula_input" name="per_pdf_cedula" accept="application/pdf,image/*" required>
-    </label>
-    <label>RUT (Opcional)
-      <input type="file" id="per_pdf_rut_input" name="per_pdf_rut" accept="application/pdf,image/*">
-    </label>
-    <label>Certificado de Cuenta de Ahorros / Nequi / Daviplata *
-      <input type="file" id="per_pdf_comprobante_banco_input" name="per_pdf_comprobante_banco"
-        accept="application/pdf,image/*" required>
-    </label>
-    <label>Hoja de Vida (Opcional)
-      <input type="file" id="per_pdf_hoja_vida_input" name="per_pdf_hoja_vida" accept="application/pdf,image/*">
-    </label>
-
-    <label>Tipo Documento*
-      <select name="per_tipo_doc" id="tipo_documento_Select" required>
-        <option value="">-- Seleccione --</option>
-        <option value="CC">CC – Cédula de Ciudadanía</option>
-        <option value="PPT">PPT – Permiso por Protección Temporal</option>
-      </select>
-    </label>
-
-    <label>Cédula*
-      <input type="text" name="per_num_doc" maxlength="10" inputmode="numeric" pattern="\d{6,10}" class="digits-only"
-        required>
-    </label>
-
-    <label>Primer Nombre*
-      <input type="text" name="per_primer_nombre" maxlength="50" class="solo_letras" required>
-    </label>
-
-    <label>Segundo Nombre (Opcional)
-      <input type="text" name="per_segundo_nombre" maxlength="50" class="solo_letras">
-    </label>
-
-    <label>Primer Apellido*
-      <input type="text" name="per_primer_apellido" maxlength="50" class="solo_letras" required>
-    </label>
-
-    <label>Segundo Apellido (Opcional)
-      <input type="text" name="per_segundo_apellido" maxlength="50" class="solo_letras">
-    </label>
-
-    <label>Teléfono Llamada (Opcional)
-      <input type="text" name="per_telefono_llamada" maxlength="10" class="digits-only">
-    </label>
-
-    <label>Teléfono WhatsApp*
-      <input type="text" name="per_telefono_whatsapp" maxlength="10" class="digits-only" required>
-    </label>
-
-    <label>Género*
-      <select name="per_genero_id" id="generoSelect" required></select>
-    </label>
-
-    <label>EPS (Opcional)
-      <select name="per_eps_id" id="epsSelect"></select>
-    </label>
-
-    <label>Fecha Nacimiento*
-      <input type="date" name="per_fecha_nacimiento" id="per_fecha_nacimiento" required>
-    </label>
-
-    <label>Correo*
-      <input type="email" name="per_correo" maxlength="100" required>
-    </label>
-
-    <label>Dirección de residencia*
-      <input type="text" name="per_direccion_residencia" maxlength="100" required>
-    </label>
-
-    <label>Ciudad*
-      <select name="per_ciudad_id" id="ciudadSelect" required></select>
-    </label>
-
-    <label>Localidad o Barrio*
-      <input type="text" name="per_localidad_barrio" maxlength="100" class="solo_letras" required>
-    </label>
-
-    <label>Tipo de alimentación*
-      <select name="per_ali_id" id="alimentacionSelect" required></select>
-    </label>
-
-    <label>Alergias (Opcional)
-      <input type="text" name="per_alergias" maxlength="100" class="solo_letras">
-    </label>
-
-    <label>Estatura(cm)*
-      <input type="text" name="per_estatura" maxlength="3" inputmode="numeric" class="digits-only" required>
-    </label>
-
-    <label>Talla Camiseta*
-      <select name="per_talla_camiseta" id="TallaCamisetaSelect" required>
-        <option value="">-- Seleccione --</option>
-        <option value="XS">XS</option>
-        <option value="S">S</option>
-        <option value="M">M</option>
-        <option value="L">L</option>
-        <option value="XL">XL</option>
-        <option value="2XL">2XL</option>
-        <option value="3XL">3XL</option>
-        <option value="4XL">4XL</option>
-      </select>
-    </label>
-
-    <label>Talla de Pantalón (Opcional)
-      <select name="per_talla_pantalon" id="TallaPantalonSelect">
-        <option value="">00</option>
-        <option value="04">04</option>
-        <option value="06">06</option>
-        <option value="08">08</option>
-        <option value="10">10</option>
-        <option value="12">12</option>
-        <option value="14">14</option>
-        <option value="16">16</option>
-        <option value="18">18</option>
-        <option value="20">20</option>
-        <option value="22">22</option>
-        <option value="24">24</option>
-        <option value="26">26</option>
-        <option value="28">28</option>
-        <option value="30">30</option>
-        <option value="32">32</option>
-        <option value="34">34</option>
-        <option value="36">36</option>
-        <option value="38">38</option>
-        <option value="40">40</option>
-      </select>
-    </label>
-
-    <label>Talla de Zapatos (Opcional)
-      <select name="per_talla_zapatos" id="TallaZapatosSelect">
-        <option value="">00</option>
-        <option value="30">30</option>
-        <option value="31">31</option>
-        <option value="32">32</option>
-        <option value="33">33</option>
-        <option value="34">34</option>
-        <option value="35">35</option>
-        <option value="36">36</option>
-        <option value="37">37</option>
-        <option value="38">38</option>
-        <option value="39">39</option>
-        <option value="40">40</option>
-        <option value="41">41</option>
-        <option value="42">42</option>
-        <option value="43">43</option>
-        <option value="44">44</option>
-        <option value="45">45</option>
-      </select>
-    </label>
-
-    <label>Nombre contacto emergencia*
-      <input type="text" name="per_nombre_emergencia" maxlength="100" class="solo_letras" required>
-    </label>
-
-    <label>Teléfono contacto emergencia*
-      <input type="text" name="per_telefono_contacto_emergencia" maxlength="10" inputmode="numeric" class="digits-only"
-        required>
-    </label>
-
-    <label>Banco*
-      <select name="dba_banco_id" id="BancoSelect" required></select>
-    </label>
-
-    <label>Número de Cuenta* <small id="num_cuenta_comen"> (no se aceptan cuenta de terceros)</small>
-      <input type="text" name="dba_num_cuenta" id="NumeroCuentaInput" maxlength="20" inputmode="numeric"
-        class="digits-only" required>
-    </label>
-
-    <label>Nivel de Inglés (Opcional)
-      <select name="per_nivel_ingles" id="per_nivel_ingles">
-        <option value="NO HABLO INGLES">NO HABLO INGLES</option>
-        <option value="A1">A1</option>
-        <option value="A2">A2</option>
-        <option value="B1">B1</option>
-        <option value="B2">B2</option>
-        <option value="C1">C1</option>
-        <option value="C2">C2</option>
-      </select>
-    </label>
-
-    <button type="submit">Registrar</button>
-  </form>
-
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
-
-  <script>
-    // ========= CONFIG =========
-    const SUPABASE_URL = 'https://mjtrmkftgeebbrkqtdou.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qdHJta2Z0Z2VlYmJya3F0ZG91Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0ODk3MjEsImV4cCI6MjA3MjA2NTcyMX0.zNp-JkJ0xJioGLqV2M2DmijLfUulPgMC8tbEhf8ZjZk';
-    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    // ========= SELECTS (catálogos) =========
-    const camposSelect = {
-      generos: { id: 'gen_id', texto: 'gen_nombre' },
-      ciudades: { id: 'ciu_id', texto: 'ciu_nombre' },
-      epss: { id: 'eps_id', texto: 'eps_nombre' },
-      alimentacion: { id: 'ali_id', texto: 'ali_tipo_alimentacion' },
-      bancos: { id: 'ban_id', texto: 'ban_banco_nombre' }
-    };
-
-    async function cargarOpciones(tabla, selectId) {
-      const cfg = camposSelect[tabla];
-      if (!cfg) return;
-      const { data, error } = await supabaseClient
-        .from(tabla).select(`${cfg.id}, ${cfg.texto}`).order(cfg.texto, { ascending: true });
-      if (error) { console.error(error); return; }
-      const sel = document.getElementById(selectId);
-      sel.innerHTML = `<option value="">-- Seleccione --</option>`;
-      data.forEach(r => sel.innerHTML += `<option value="${r[cfg.id]}">${r[cfg.texto]}</option>`);
-    }
-
-    // ID de "Para Todo" (perfilamiento por defecto)
-    let PARA_TODO_ID = null;
-    async function cargarParaTodoId() {
-      const { data, error } = await supabaseClient
-        .from('perfilamiento')
-        .select('perf_id')
-        .ilike('perf_nombre_perfil', 'Para Todo')
-        .limit(1)
-        .maybeSingle();
-      if (error) console.error('Error buscando "Para Todo":', error);
-      PARA_TODO_ID = data?.perf_id || null;
-    }
-
-    async function inicializarSelects() {
-      await cargarOpciones('generos', 'generoSelect');
-      await cargarOpciones('ciudades', 'ciudadSelect');
-      await cargarOpciones('epss', 'epsSelect');
-      await cargarOpciones('alimentacion', 'alimentacionSelect');
-      await cargarOpciones('bancos', 'BancoSelect');
-      await cargarParaTodoId(); // 👈 asegura el ID por defecto
-    }
-
-    // ========= VALIDACIONES / ERRORES =========
-    const MAX_FILE_MB = 20;
-    function bytesToMB(n) { return (n / (1024 * 1024)).toFixed(1); }
-
-    function validarArchivo(file, etiqueta, opts = {}) {
-      if (!file) return { ok: true };
-      const max = opts.maxMB || MAX_FILE_MB;
-      if (file.size > max * 1024 * 1024) {
-        return { ok: false, msg: `El archivo "${etiqueta}" pesa ${bytesToMB(file.size)} MB y el límite es ${max} MB.` };
-      }
-      if (opts.accept && opts.accept.length) {
-        const name = (file.name || '').toLowerCase();
-        const type = (file.type || '').toLowerCase();
-        const ext = name.includes('.') ? '.' + name.split('.').pop() : '';
-        const ok = opts.accept.some((patRaw) => {
-          const pat = patRaw.toLowerCase().trim();
-          if (pat.endsWith('/*')) {
-            const prefix = pat.slice(0, -1);
-            return type.startsWith(prefix) || (type === 'application/octet-stream' && ext.startsWith(prefix));
-          }
-          if (pat.startsWith('.')) return ext === pat;
-          if (pat.includes('/')) {
-            return type === pat || type.startsWith(pat) || (type === 'application/octet-stream' && ext && pat.includes(ext.replace('.', '')));
-          }
-          return false;
-        });
-        if (!ok) return { ok: false, msg: `El archivo de "${etiqueta}" no tiene un formato permitido.` };
-      }
-      return { ok: true };
-    }
-
-    function explicarError(err) {
-      const msg = (err && (err.message || err.error_description || err.error || String(err))) || 'Error desconocido';
-      const lower = msg.toLowerCase();
-      if (lower.includes('invalid key')) return 'Nombre de archivo inválido (tildes, ñ u otros símbolos).';
-      if (lower.includes('payload') || lower.includes('413')) return 'El archivo es demasiado pesado para subir.';
-      if (lower.includes('permission') || lower.includes('rls') || lower.includes('policy')) return 'Permiso denegado por políticas de seguridad (RLS).';
-      if (lower.includes('bucket') || lower.includes('storage')) return 'No se pudo subir a Storage. Revisa el bucket/políticas.';
-      return msg;
-    }
-
-    // ========= Storage helpers =========
-    function slugifyFilename(name) {
-      const lower = (name || 'archivo').toLowerCase();
-      const noExt = lower.replace(/\.[^.]+$/, '');
-      const ext = (lower.match(/\.([^.]+)$/)?.[0]) || '';
-      let base = noExt.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      base = base.replace(/[^a-z0-9._-]+/g, '_');
-      base = base.replace(/_+/g, '_').replace(/^_+|_+$/g, '').slice(0, 80);
-      return (base || 'archivo') + ext;
-    }
-
-    function buildStorageKey(prefix, originalName, doc = '') {
-      const safeName = slugifyFilename(originalName);
-      const docPart = (doc || '').replace(/\D/g, '').slice(0, 20) || 'nd';
-      return `${prefix}/${docPart}/${Date.now()}_${safeName}`;
-    }
-
-    function guessContentType(filename) {
-      const ext = (filename.split('.').pop() || '').toLowerCase();
-      if (ext === 'pdf') return 'application/pdf';
-      if (['jpg', 'jpeg'].includes(ext)) return 'image/jpeg';
-      if (ext === 'png') return 'image/png';
-      if (ext === 'webp') return 'image/webp';
-      return 'application/octet-stream';
-    }
-
-    async function subirArchivo(bucket, archivo, key) {
-      const contentType = archivo.type || guessContentType(key);
-      const { error } = await supabaseClient.storage.from(bucket).upload(key, archivo, { upsert: true, contentType });
-      if (error) throw error;
-      return supabaseClient.storage.from(bucket).getPublicUrl(key).data.publicUrl;
-    }
-
-    // ========= RPC PRECHECK =========
-    async function verificarElegibilidad(supabaseClient, doc) {
-      const DUP_MSG  = "Ya llenaste este formulario en el pasado, si quieres modificar algún dato por favor escribe por WhatsApp al 3015907964";
-      const AUTH_MSG = "Hola! Aún no perteneces a nuestra base de datos, si aún no has realizado entrevista puedes realizarla en el siguiente link https://linktr.ee/operadoresarmadillo o escribe al 3015907964";
-
-      const cedula = (doc || "").trim();
-      if (!cedula) return { ok: false, msg: "Debes ingresar una cédula válida." };
-
-      const { data, error } = await supabaseClient.rpc('precheck_persona', { p_doc: cedula });
-      if (error) {
-        console.error('Error en precheck_persona:', error);
-        return { ok: false, msg: "Error validando autorización. Intenta de nuevo." };
-      }
-
-      // Asegura booleans y no globales
-      const existe = !!data?.existe;       // ¿Ya está en personal?
-      const autorizado = !!data?.autorizado; // ¿Está en autorizados?
-
-      // 🔴 1) PRIORIDAD: si ya existe en personal, bloquear con mensaje de duplicado
-      if (existe) return { ok: false, msg: DUP_MSG };
-
-      // 🟡 2) Si no existe en personal, pero NO está autorizado, bloquear con mensaje de autorización
-      if (!autorizado) return { ok: false, msg: AUTH_MSG };
-
-      // 🟢 3) Caso permitido: no existe en personal y sí está autorizado
-      return { ok: true, msg: "" };
-    }
-
-
-    // ========= SUBMIT =========
-    document.addEventListener('DOMContentLoaded', async () => {
-      await inicializarSelects();
-
-      document.getElementById('personalForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const form = e.target;
-        const btn = form.querySelector('button[type="submit"]');
-        if (btn.disabled) return;
-
-        const originalText = btn.textContent;
-        btn.disabled = true;
-        btn.textContent = 'Enviando...';
-        btn.setAttribute('aria-busy', 'true');
-
-        try {
-          if (!navigator.onLine) { alert('Sin conexión a internet. Verifica tu red e inténtalo de nuevo.'); return; }
-
-          const formData = new FormData(form);
-
-          // 1) Fecha válida y no futura
-          const fechaStr = formData.get('per_fecha_nacimiento');
-          const fechaNacimiento = new Date(fechaStr);
-          if (!fechaStr || isNaN(fechaNacimiento.getTime())) { alert("Debes ingresar una fecha de nacimiento válida."); return; }
-          if (fechaNacimiento > new Date()) { alert("La fecha de nacimiento no puede ser en el futuro."); return; }
-
-          // 2) Documento válido
-          const doc = (formData.get('per_num_doc') || '').trim();
-          if (!/^\d{6,10}$/.test(doc)) { alert('La cédula debe tener entre 6 y 10 dígitos.'); return; }
-
-          // 3) Pre-check
-          const eleg = await verificarElegibilidad(supabaseClient, doc);
-          if (!eleg.ok) { alert(eleg.msg); return; }
-
-          // 4) Validar archivos
-          const filesCfg = [
-            { name: 'per_foto', etiqueta: 'Foto personal', required: true, accept: ['image/*'] },
-            { name: 'per_pdf_cedula', etiqueta: 'Imagen Cédula', required: true, accept: ['.pdf', 'application/pdf', 'image/*'] },
-            { name: 'per_pdf_rut', etiqueta: 'RUT', required: false, accept: ['.pdf', 'application/pdf', 'image/*'] },
-            { name: 'per_pdf_comprobante_banco', etiqueta: 'Certificado de Cuenta', required: true, accept: ['.pdf', 'application/pdf', 'image/*'] },
-            { name: 'per_pdf_hoja_vida', etiqueta: 'Hoja de Vida', required: false, accept: ['.pdf', 'application/pdf', 'image/*'] },
-          ];
-          for (const f of filesCfg) {
-            const file = formData.get(f.name);
-            if (f.required && (!file || !file.name)) { alert(`Falta adjuntar: ${f.etiqueta}.`); return; }
-            const v = validarArchivo(file && file.name ? file : null, f.etiqueta, { accept: f.accept });
-            if (!v.ok) { alert(v.msg); return; }
-          }
-
-          // 5) Subir archivos (nombres seguros)
-          const urls = {};
-          for (const f of filesCfg) {
-            const file = formData.get(f.name);
-            if (file && file.name) {
-              const key = buildStorageKey(f.name, file.name, doc);
-              try {
-                urls[f.name] = await subirArchivo('personalfiles', file, key);
-              } catch (err) {
-                console.error('Storage upload error', err);
-                throw new Error(`No se pudo subir "${f.etiqueta}": ${explicarError(err)}`);
-              }
-            }
-          }
-
-          // 6) Preparar objeto "personal" para RPC
-          const datos = Object.fromEntries(formData.entries());
-
-          // quitar campos que NO van en personal
-          delete datos.dba_banco_id;
-          delete datos.dba_num_cuenta;
-          delete datos.per_foto;
-          delete datos.per_pdf_cedula;
-          delete datos.per_pdf_rut;
-          delete datos.per_pdf_comprobante_banco;
-          delete datos.per_pdf_hoja_vida;
-
-          // normalizar strings
-          for (const k in datos) {
-            if (typeof datos[k] === 'string') {
-              const t = datos[k].trim();
-              datos[k] = t === '' ? null : t;
-            }
-          }
-
-          // defaults obligatorios
-          // ❌ ya no se usa: datos.per_perfilamiento = 1;
-          datos.per_status_personal = 1;
-
-          // IDs → enteros
-          ['per_genero_id', 'per_eps_id', 'per_ciudad_id', 'per_ali_id'].forEach((f) => {
-            if (datos[f] != null) {
-              const n = parseInt(datos[f], 10);
-              datos[f] = Number.isFinite(n) ? n : null;
-            }
-          });
-
-          // URLs subidas
-          if (urls.per_foto) datos.per_foto = urls.per_foto;
-          if (urls.per_pdf_cedula) datos.per_pdf_cedula = urls.per_pdf_cedula;
-          if (urls.per_pdf_rut) datos.per_pdf_rut = urls.per_pdf_rut;
-          if (urls.per_pdf_comprobante_banco) datos.per_pdf_comprobante_banco = urls.per_pdf_comprobante_banco;
-          if (urls.per_pdf_hoja_vida) datos.per_pdf_hoja_vida = urls.per_pdf_hoja_vida;
-
-          // 7) Objeto "banco" para RPC
-          const bancoData = {
-            dba_banco_id: (() => {
-              const raw = formData.get('dba_banco_id');
-              if (raw == null || raw === '') return null;
-              const n = parseInt(raw, 10);
-              return Number.isFinite(n) ? n : null;
-            })(),
-            dba_num_cuenta: (formData.get('dba_num_cuenta') || '').trim() || null
-          };
-
-          // 8) Perfiles: Forzar "Para Todo"
-          if (!PARA_TODO_ID) { alert('No se encontró el perfilamiento "Para Todo". Avísanos para activarlo.'); return; }
-          const perfIds = [PARA_TODO_ID];
-
-          // 9) RPC v2 (inserta personal + relación en tabla puente)
-          const { error } = await supabaseClient.rpc('insertar_personal_completo_v2', {
-            p_banco: bancoData,
-            p_personal: datos,
-            //p_perf_ids: perfIds
-          });
-          if (error) { console.error('RPC error →', error); throw new Error(`Error al guardar: ${explicarError(error)}`); }
-
-          alert('✅ Registro guardado correctamente');
-          form.reset();
-
-        } catch (err) {
-          console.error('Submit error', err);
-          alert(`⚠️ No pudimos completar el registro.\n\nDetalle: ${explicarError(err)}`);
-        } finally {
-          btn.disabled = false;
-          btn.textContent = originalText;
-          btn.removeAttribute('aria-busy');
+    <div class="header">
+        <img src="https://raw.githubusercontent.com/tecnologia2-armadillo/erp-frontend/main/public/logo.png"
+            alt="Armadillo" onerror="this.style.display='none'">
+        <h1>Registro de Personal</h1>
+        <p>Solo pueden enviar el formulario los usuarios autorizados</p>
+    </div>
+
+    <div class="card">
+        <form id="personalForm" novalidate>
+
+            <!-- ── Documentos ── -->
+            <div class="section-title">Documentos</div>
+            <div class="grid grid-2">
+                <div class="field">
+                    <label>Foto personal<span class="req">*</span></label>
+                    <input type="file" name="per_foto" accept="image/*" required>
+                </div>
+                <div class="field">
+                    <label>Imagen / Cédula<span class="req">*</span></label>
+                    <input type="file" name="per_pdf_cedula" accept="application/pdf,image/*" required>
+                </div>
+                <div class="field">
+                    <label>Certificado bancario<span class="req">*</span></label>
+                    <input type="file" name="per_pdf_comprobante_banco" accept="application/pdf,image/*" required>
+                </div>
+                <div class="field">
+                    <label>RUT <span style="color:var(--muted)">(opcional)</span></label>
+                    <input type="file" name="per_pdf_rut" accept="application/pdf,image/*">
+                </div>
+                <div class="field">
+                    <label>Hoja de vida <span style="color:var(--muted)">(opcional)</span></label>
+                    <input type="file" name="per_pdf_hoja_vida" accept="application/pdf,image/*">
+                </div>
+            </div>
+
+            <!-- ── Identificación ── -->
+            <div class="section-title">Identificación</div>
+            <div class="grid grid-2">
+                <div class="field">
+                    <label>Tipo de documento<span class="req">*</span></label>
+                    <select name="tipo_documento" required>
+                        <option value="">— Seleccione —</option>
+                        <option value="CC">CC – Cédula de Ciudadanía</option>
+                        <option value="PPT">PPT – Permiso por Protección Temporal</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Número de documento<span class="req">*</span></label>
+                    <input type="text" name="num_documento" maxlength="10" inputmode="numeric" pattern="\d{6,10}"
+                        class="digits-only" required>
+                </div>
+            </div>
+
+            <!-- ── Datos personales ── -->
+            <div class="section-title">Datos personales</div>
+            <div class="grid grid-2">
+                <div class="field">
+                    <label>Primer nombre<span class="req">*</span></label>
+                    <input type="text" name="primer_nombre" maxlength="50" class="solo_letras" required>
+                </div>
+                <div class="field">
+                    <label>Segundo nombre <span style="color:var(--muted)">(opcional)</span></label>
+                    <input type="text" name="segundo_nombre" maxlength="50" class="solo_letras">
+                </div>
+                <div class="field">
+                    <label>Primer apellido<span class="req">*</span></label>
+                    <input type="text" name="primer_apellido" maxlength="50" class="solo_letras" required>
+                </div>
+                <div class="field">
+                    <label>Segundo apellido <span style="color:var(--muted)">(opcional)</span></label>
+                    <input type="text" name="segundo_apellido" maxlength="50" class="solo_letras">
+                </div>
+                <div class="field">
+                    <label>Género<span class="req">*</span></label>
+                    <select name="generos_id" id="generoSelect" required></select>
+                </div>
+                <div class="field">
+                    <label>Fecha de nacimiento<span class="req">*</span></label>
+                    <input type="date" name="fecha_nacimiento" required>
+                </div>
+                <div class="field">
+                    <label>Correo electrónico<span class="req">*</span></label>
+                    <input type="email" name="correo" maxlength="100" required>
+                </div>
+                <div class="field">
+                    <label>EPS <span style="color:var(--muted)">(opcional)</span></label>
+                    <select name="eps_id" id="epsSelect"></select>
+                </div>
+            </div>
+
+            <!-- ── Contacto ── -->
+            <div class="section-title">Contacto</div>
+            <div class="grid grid-2">
+                <div class="field">
+                    <label>WhatsApp<span class="req">*</span></label>
+                    <input type="text" name="telefono_whatsapp" maxlength="10" class="digits-only" required>
+                </div>
+                <div class="field">
+                    <label>Teléfono llamada <span style="color:var(--muted)">(opcional)</span></label>
+                    <input type="text" name="telefono_llamada" maxlength="10" class="digits-only">
+                </div>
+                <div class="field">
+                    <label>Contacto emergencia<span class="req">*</span></label>
+                    <input type="text" name="nombre_emergencia" maxlength="100" class="solo_letras" required>
+                </div>
+                <div class="field">
+                    <label>Teléfono emergencia<span class="req">*</span></label>
+                    <input type="text" name="telefono_contacto_emergencia" maxlength="10" class="digits-only" required>
+                </div>
+            </div>
+
+            <!-- ── Residencia ── -->
+            <div class="section-title">Residencia</div>
+            <div class="grid grid-2">
+                <div class="field">
+                    <label>Dirección<span class="req">*</span></label>
+                    <input type="text" name="direccion_residencia" maxlength="100" required>
+                </div>
+                <div class="field">
+                    <label>Ciudad<span class="req">*</span></label>
+                    <select name="municipios_id" id="ciudadSelect" required></select>
+                </div>
+                <div class="field">
+                    <label>Localidad / Barrio<span class="req">*</span></label>
+                    <input type="text" name="localidad_barrio" maxlength="100" class="solo_letras" required>
+                </div>
+            </div>
+
+            <!-- ── Tallas & Salud ── -->
+            <div class="section-title">Tallas &amp; Salud</div>
+            <div class="grid grid-3">
+                <div class="field">
+                    <label>Estatura (cm)<span class="req">*</span></label>
+                    <input type="text" name="estatura" maxlength="3" class="digits-only" required>
+                </div>
+                <div class="field">
+                    <label>Talla camiseta<span class="req">*</span></label>
+                    <select name="talla_camiseta" required>
+                        <option value="">— Seleccione —</option>
+                        <option>XS</option>
+                        <option>S</option>
+                        <option>M</option>
+                        <option>L</option>
+                        <option>XL</option>
+                        <option>2XL</option>
+                        <option>3XL</option>
+                        <option>4XL</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Talla pantalón <span style="color:var(--muted)">(opcional)</span></label>
+                    <select name="talla_pantalon">
+                        <option value="">00</option>
+                        <option>04</option>
+                        <option>06</option>
+                        <option>08</option>
+                        <option>10</option>
+                        <option>12</option>
+                        <option>14</option>
+                        <option>16</option>
+                        <option>18</option>
+                        <option>20</option>
+                        <option>22</option>
+                        <option>24</option>
+                        <option>26</option>
+                        <option>28</option>
+                        <option>30</option>
+                        <option>32</option>
+                        <option>34</option>
+                        <option>36</option>
+                        <option>38</option>
+                        <option>40</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Talla zapatos <span style="color:var(--muted)">(opcional)</span></label>
+                    <select name="talla_zapatos">
+                        <option value="">00</option>
+                        <option>30</option>
+                        <option>31</option>
+                        <option>32</option>
+                        <option>33</option>
+                        <option>34</option>
+                        <option>35</option>
+                        <option>36</option>
+                        <option>37</option>
+                        <option>38</option>
+                        <option>39</option>
+                        <option>40</option>
+                        <option>41</option>
+                        <option>42</option>
+                        <option>43</option>
+                        <option>44</option>
+                        <option>45</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Tipo de alimentación<span class="req">*</span></label>
+                    <select name="alimentacion_id" id="alimentacionSelect" required></select>
+                </div>
+                <div class="field">
+                    <label>Alergias <span style="color:var(--muted)">(opcional)</span></label>
+                    <input type="text" name="alergias" maxlength="100" class="solo_letras">
+                </div>
+            </div>
+
+            <!-- ── Otros ── -->
+            <div class="section-title">Otros</div>
+            <div class="grid grid-2">
+                <div class="field">
+                    <label>Nivel de inglés</label>
+                    <select name="nivel_ingles">
+                        <option value="NO HABLO INGLES">No hablo inglés</option>
+                        <option value="A1">A1</option>
+                        <option value="A2">A2</option>
+                        <option value="B1">B1</option>
+                        <option value="B2">B2</option>
+                        <option value="C1">C1</option>
+                        <option value="C2">C2</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- ── Datos bancarios ── -->
+            <div class="section-title">Datos bancarios</div>
+            <div class="grid grid-2">
+                <div class="field">
+                    <label>Banco<span class="req">*</span></label>
+                    <select name="dba_banco_id" id="BancoSelect" required></select>
+                </div>
+                <div class="field">
+                    <label>Número de cuenta<span class="req">*</span></label>
+                    <input type="text" name="dba_num_cuenta" maxlength="20" class="digits-only" required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Registrar</button>
+            <p class="nota">Solo usuarios autorizados pueden completar este formulario.</p>
+
+        </form>
+    </div>
+
+    <script>
+        const API_BASE = 'https://qa.operadoresarmadillo.com/comercial/api/v1';
+
+        async function cargarSelect(url, id, valField, labelField, placeholder = '— Seleccione —') {
+            try {
+                const r = await fetch(url);
+                if (!r.ok) return;
+                const data = await r.json();
+                const sel = document.getElementById(id);
+                sel.innerHTML = `<option value="">${placeholder}</option>`;
+                data.forEach(d => {
+                    const o = document.createElement('option');
+                    o.value = d[valField]; o.textContent = d[labelField];
+                    sel.appendChild(o);
+                });
+            } catch (e) { console.error('Error cargando', id, e); }
         }
-      });
-    });
 
-    // ========= DOM helpers: SOLO NÚMEROS =========
-    ; (() => {
-      function getMax(el) {
-        const n = parseInt(el.getAttribute('data-maxlength'), 10);
-        return Number.isFinite(n) ? n : 9999;
-      }
-      const controlKeys = new Set(['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight', 'Home', 'End']);
-      document.addEventListener('keydown', (e) => {
-        const el = e.target;
-        if (!(el instanceof HTMLInputElement) || !el.classList.contains('digits-only')) return;
-        const k = e.key;
-        const modCombo = (e.ctrlKey || e.metaKey) && ['a', 'c', 'v', 'x'].includes(k.toLowerCase());
-        if (controlKeys.has(k) || modCombo) return;
-        const max = getMax(el);
-        if (!/^\d$/.test(k) || el.value.length >= max) e.preventDefault();
-      });
-      document.addEventListener('paste', (e) => {
-        const el = e.target;
-        if (!(el instanceof HTMLInputElement) || !el.classList.contains('digits-only')) return;
-        const raw = (e.clipboardData || window.clipboardData).getData('text') || '';
-        const digits = raw.replace(/\D/g, '');
-        const max = getMax(el);
-        const space = max - el.value.length;
-        e.preventDefault();
-        if (space > 0 && digits) el.value += digits.slice(0, space);
-      });
-      document.addEventListener('input', (e) => {
-        const el = e.target;
-        if (!(el instanceof HTMLInputElement) || !el.classList.contains('digits-only')) return;
-        const max = getMax(el);
-        const cleaned = el.value.replace(/\D/g, '').slice(0, max);
-        if (el.value !== cleaned) el.value = cleaned;
-      });
-    })();
+        async function inicializar() {
+            await Promise.all([
+                cargarSelect(`${API_BASE}/generos/`, 'generoSelect', 'id', 'nombre'),
+                cargarSelect(`${API_BASE}/municipios/`, 'ciudadSelect', 'id', 'nombre'),
+                cargarSelect(`${API_BASE}/eps/activas`, 'epsSelect', 'id', 'nombre', '— Sin EPS —'),
+                cargarSelect(`${API_BASE}/alimentacion/activos`, 'alimentacionSelect', 'id', 'nombre'),
+                cargarSelect(`${API_BASE}/bancos/activos`, 'BancoSelect', 'id', 'nombre'),
+            ]);
+        }
 
-    // ========= DOM helpers: SOLO LETRAS =========
-    ; (() => {
-      const allowed = /[A-Za-zÁÉÍÓÚÜáéíóúüÑñ\s'-]/g;
-      function maxLen(el) {
-        const n = parseInt(el.dataset.maxlength || el.maxLength || '100', 10);
-        return Number.isFinite(n) ? n : 100;
-      }
-      document.addEventListener('input', (e) => {
-        const el = e.target;
-        if (!(el instanceof HTMLInputElement) || !el.classList.contains('solo_letras')) return;
-        const m = maxLen(el);
-        const cleaned = (el.value.match(allowed) || []).join('').slice(0, m);
-        if (el.value !== cleaned) el.value = cleaned;
-      });
-      document.addEventListener('paste', (e) => {
-        const el = e.target;
-        if (!(el instanceof HTMLInputElement) || !el.classList.contains('solo_letras')) return;
-        const raw = (e.clipboardData || window.clipboardData).getData('text') || '';
-        const m = maxLen(el);
-        const cleaned = (raw.match(allowed) || []).join('');
-        const space = m - el.value.length;
-        e.preventDefault();
-        if (space > 0 && cleaned) el.value += cleaned.slice(0, space);
-      });
-    })();
-  </script>
+        const MAX_MB = 20;
+        function validarArchivo(file, label, accept) {
+            if (!file || !file.name) return null;
+            if (file.size > MAX_MB * 1024 * 1024)
+                return `"${label}" supera el límite de ${MAX_MB} MB.`;
+            if (accept) {
+                const ext = '.' + file.name.split('.').pop().toLowerCase();
+                const type = (file.type || '').toLowerCase();
+                const ok = accept.some(p => {
+                    p = p.toLowerCase();
+                    if (p.endsWith('/*')) return type.startsWith(p.slice(0, -1));
+                    if (p.startsWith('.')) return ext === p;
+                    return type === p || type.startsWith(p);
+                });
+                if (!ok) return `"${label}" tiene un formato no permitido.`;
+            }
+            return null;
+        }
 
+        const DUP_MSG = 'Ya llenaste este formulario. Para modificar algún dato escribe al 3015907964.';
+        const AUTH_MSG = 'Aún no perteneces a nuestra base de datos. Realiza tu entrevista en https://linktr.ee/operadoresarmadillo o escribe al 3015907964.';
+
+        async function precheck(doc) {
+            try {
+                const r = await fetch(`${API_BASE}/personal/precheck/${encodeURIComponent(doc)}`);
+                if (!r.ok) throw new Error(`HTTP ${r.status}`);
+                const d = await r.json();
+                if (d.existe) return { ok: false, msg: DUP_MSG };
+                if (!d.autorizado) return { ok: false, msg: AUTH_MSG };
+                return { ok: true };
+            } catch (e) {
+                return { ok: false, msg: 'Error validando autorización. Intenta de nuevo.' };
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await inicializar();
+
+            document.getElementById('personalForm').addEventListener('submit', async e => {
+                e.preventDefault();
+                const form = e.target;
+                const btn = form.querySelector('.btn-submit');
+                if (btn.disabled) return;
+                btn.disabled = true;
+                const txt = btn.textContent;
+                btn.textContent = 'Enviando…';
+
+                try {
+                    if (!navigator.onLine) { alert('Sin conexión a internet.'); return; }
+                    const fd = new FormData(form);
+
+                    // Validaciones
+                    const doc = (fd.get('num_documento') || '').trim();
+                    if (!/^\d{6,10}$/.test(doc)) { alert('La cédula debe tener entre 6 y 10 dígitos.'); return; }
+
+                    const fecha = new Date(fd.get('fecha_nacimiento'));
+                    if (isNaN(fecha) || fecha > new Date()) { alert('Fecha de nacimiento inválida.'); return; }
+
+                    const check = await precheck(doc);
+                    if (!check.ok) { alert(check.msg); return; }
+
+                    const archivos = [
+                        { n: 'per_foto', l: 'Foto personal', req: true, ac: ['image/*'] },
+                        { n: 'per_pdf_cedula', l: 'Imagen Cédula', req: true, ac: ['application/pdf', 'image/*'] },
+                        { n: 'per_pdf_comprobante_banco', l: 'Certificado bancario', req: true, ac: ['application/pdf', 'image/*'] },
+                        { n: 'per_pdf_rut', l: 'RUT', req: false, ac: ['application/pdf', 'image/*'] },
+                        { n: 'per_pdf_hoja_vida', l: 'Hoja de vida', req: false, ac: ['application/pdf', 'image/*'] },
+                    ];
+                    for (const a of archivos) {
+                        const f = fd.get(a.n);
+                        if (a.req && (!f || !f.name)) { alert(`Falta adjuntar: ${a.l}.`); return; }
+                        const err = validarArchivo(f && f.name ? f : null, a.l, a.ac);
+                        if (err) { alert(err); return; }
+                    }
+
+                    // Limpiar opcionales vacíos
+                    ['per_pdf_rut', 'per_pdf_hoja_vida', 'per_foto',
+                        'segundo_nombre', 'segundo_apellido', 'telefono_llamada',
+                        'talla_pantalon', 'talla_zapatos', 'alergias'].forEach(k => {
+                            const v = fd.get(k);
+                            if (!v || (v instanceof File && !v.name) || v === '') fd.delete(k);
+                        });
+
+                    const res = await fetch(`${API_BASE}/personal/`, { method: 'POST', body: fd });
+                    if (!res.ok) {
+                        let det = `HTTP ${res.status}`;
+                        try { const e = await res.json(); det = e.detail || JSON.stringify(e); } catch (_) { }
+                        throw new Error(det);
+                    }
+                    alert('✅ Registro guardado correctamente.');
+                    form.reset();
+                } catch (err) {
+                    alert(`⚠️ No pudimos completar el registro.\n\n${err.message || err}`);
+                } finally {
+                    btn.disabled = false;
+                    btn.textContent = txt;
+                }
+            });
+        });
+
+        // Solo dígitos
+        (() => {
+            const ctrl = new Set(['Backspace', 'Delete', 'Tab', 'Escape', 'Enter', 'ArrowLeft', 'ArrowRight', 'Home', 'End']);
+            document.addEventListener('keydown', e => {
+                const el = e.target;
+                if (!(el instanceof HTMLInputElement) || !el.classList.contains('digits-only')) return;
+                if (ctrl.has(e.key) || ((e.ctrlKey || e.metaKey) && 'acvx'.includes(e.key.toLowerCase()))) return;
+                if (!/^\d$/.test(e.key) || el.value.length >= (parseInt(el.maxLength) || 9999)) e.preventDefault();
+            });
+            document.addEventListener('paste', e => {
+                const el = e.target;
+                if (!(el instanceof HTMLInputElement) || !el.classList.contains('digits-only')) return;
+                e.preventDefault();
+                const digits = ((e.clipboardData || window.clipboardData).getData('text') || '').replace(/\D/g, '');
+                const space = (parseInt(el.maxLength) || 9999) - el.value.length;
+                if (space > 0 && digits) el.value += digits.slice(0, space);
+            });
+            document.addEventListener('input', e => {
+                const el = e.target;
+                if (!(el instanceof HTMLInputElement) || !el.classList.contains('digits-only')) return;
+                const c = el.value.replace(/\D/g, '').slice(0, parseInt(el.maxLength) || 9999);
+                if (el.value !== c) el.value = c;
+            });
+        })();
+
+        // Solo letras
+        (() => {
+            const re = /[A-Za-zÁÉÍÓÚÜáéíóúüÑñ\s'-]/g;
+            document.addEventListener('input', e => {
+                const el = e.target;
+                if (!(el instanceof HTMLInputElement) || !el.classList.contains('solo_letras')) return;
+                const c = (el.value.match(re) || []).join('').slice(0, parseInt(el.maxLength) || 100);
+                if (el.value !== c) el.value = c;
+            });
+            document.addEventListener('paste', e => {
+                const el = e.target;
+                if (!(el instanceof HTMLInputElement) || !el.classList.contains('solo_letras')) return;
+                e.preventDefault();
+                const raw = ((e.clipboardData || window.clipboardData).getData('text') || '');
+                const c = (raw.match(re) || []).join('');
+                const space = (parseInt(el.maxLength) || 100) - el.value.length;
+                if (space > 0 && c) el.value += c.slice(0, space);
+            });
+        })();
+    </script>
 </body>
 
 </html>
-
-```
