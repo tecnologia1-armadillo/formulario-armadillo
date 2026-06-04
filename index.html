@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registro de Personal – Armadillo</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
-    
+
     <!-- jQuery and Select2 CDN -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -211,6 +211,7 @@
         html body .select2-container {
             width: 100% !important;
         }
+
         html body .select2-container--default .select2-selection--single {
             background-color: var(--input-bg) !important;
             border: 1px solid var(--border) !important;
@@ -219,6 +220,7 @@
             padding: .4rem .5rem !important;
             transition: border-color .2s;
         }
+
         html body .select2-container--default .select2-selection--single .select2-selection__rendered {
             color: var(--text) !important;
             font-family: 'Nunito', sans-serif !important;
@@ -226,21 +228,25 @@
             padding-left: 0 !important;
             line-height: normal !important;
         }
+
         html body .select2-container--default .select2-selection--single .select2-selection__arrow {
             height: 100% !important;
             right: 8px !important;
         }
+
         html body .select2-container--default .select2-selection--single .select2-selection__arrow b {
             border-color: var(--muted) transparent transparent transparent !important;
         }
+
         html body .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
             border-color: transparent transparent var(--muted) transparent !important;
         }
+
         html body .select2-container--default.select2-container--focus .select2-selection--single {
             border-color: var(--yellow) !important;
             box-shadow: 0 0 0 3px rgba(255, 222, 0, .12) !important;
         }
-        
+
         /* Dropdown Flotante */
         html body .select2-dropdown {
             background-color: var(--card) !important;
@@ -248,10 +254,12 @@
             border-radius: 6px !important;
             z-index: 9999 !important;
         }
+
         html body .select2-search--dropdown {
             padding: 8px !important;
             background-color: var(--card) !important;
         }
+
         html body .select2-search--dropdown .select2-search__field {
             background-color: var(--input-bg) !important;
             border: 1px solid var(--border) !important;
@@ -261,16 +269,20 @@
             padding: 6px 10px !important;
             width: 100% !important;
         }
+
         html body .select2-search--dropdown .select2-search__field:focus {
             outline: none !important;
             border-color: var(--yellow) !important;
         }
+
         html body .select2-container--default .select2-results {
             background-color: var(--card) !important;
         }
+
         html body .select2-container--default .select2-results__options {
             background-color: var(--card) !important;
         }
+
         html body .select2-container--default .select2-results__option {
             color: var(--text) !important;
             font-family: 'Nunito', sans-serif !important;
@@ -278,11 +290,13 @@
             padding: 8px 12px !important;
             background-color: var(--card) !important;
         }
+
         /* Hover / Resaltado */
         html body .select2-container--default .select2-results__option--highlighted[aria-selected] {
             background-color: var(--yellow) !important;
             color: #121212 !important;
         }
+
         /* Seleccionado */
         html body .select2-container--default .select2-results__option[aria-selected="true"] {
             background-color: rgba(255, 222, 0, 0.15) !important;
@@ -591,7 +605,7 @@
         }
 
         const DUP_MSG = 'Ya llenaste este formulario. Para modificar algún dato escribe al 3015907964.';
-        const AUTH_MSG = 'Aún no perteneces a nuestra base de datos. Realiza tu entrevista en https://linktr.ee/operadoresarmadillo o escribe al 3015907964.';
+        const AUTH_MSG = doc => `Tu número ${doc} no pertenece a nuestra base de datos. Realiza tu entrevista en https://linktr.ee/operadoresarmadillo o escribe al 3015907964.`;
 
         async function precheck(doc) {
             try {
@@ -599,7 +613,7 @@
                 if (!r.ok) throw new Error(`HTTP ${r.status}`);
                 const d = await r.json();
                 if (d.existe) return { ok: false, msg: DUP_MSG };
-                if (!d.autorizado) return { ok: false, msg: AUTH_MSG };
+                if (!d.autorizado) return { ok: false, msg: AUTH_MSG(doc) };
                 return { ok: true };
             } catch (e) {
                 return { ok: false, msg: 'Error validando autorización. Intenta de nuevo.' };
