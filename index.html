@@ -1,3 +1,4 @@
+        
 <!DOCTYPE html>
 <html lang="es">
 
@@ -680,7 +681,12 @@
                     form.reset();
                     $('#ciudadSelect').val(null).trigger('change');
                 } catch (err) {
-                    alert(`⚠️ No pudimos completar el registro.\n\n${err.message || err}`);
+                    console.error("Error en la petición:", err);
+                    let detalle = err.message || err;
+                    if (detalle === 'Failed to fetch') {
+                        detalle += `\n\nNo se pudo conectar con la URL:\n${API_BASE}/personal/\n\nPosibles causas:\n1. El servidor o la API están caídos.\n2. Problema de CORS (Cross-Origin).\n3. La conexión a internet falló.\n4. Se intentó subir un archivo tan pesado que el servidor cerró la conexión abruptamente.`;
+                    }
+                    alert(`⚠️ No pudimos completar el registro.\n\nDetalle técnico:\n${detalle}\n\nPor favor revisa la consola del navegador para más información.`);
                 } finally {
                     btn.disabled = false;
                     btn.textContent = txt;
